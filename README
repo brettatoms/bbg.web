@@ -7,3 +7,5 @@ name in the gallery
 
 autotag.py: tag orchid images in gallery with their species names based on their filenames
 
+orchid_param.php: super simple Wordpress plugin to add query parameters to Wordpress permalinks so we can call orchid.py with CGI
+
