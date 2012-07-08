@@ -1,3 +1,9 @@
 These files are used for the belizebotanic.org website.  In particular belizebotanic.org/orchid_list
 
-Requires json.py
+orchid.py: return a list of images based from the gallery based on the tag
+
+orchid_list.py: generate a list of spans and anchors from the orchid list based on whether there are any images tagged with that species
+name in the gallery
+
+autotag.py: tag orchid images in gallery with their species names based on their filenames
+

@@ -1,5 +1,8 @@
 #!/usr/local/bin/python
 #
+# autotag.py: tag orchid images in gallery with their species names
+# based on their filenames
+#
 # Requirements: pylibgal3
 #
 import os
