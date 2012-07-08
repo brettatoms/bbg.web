@@ -1,5 +1,9 @@
 #!/usr/local/bin/python
-
+#
+# ** This script must be Python 2.4 compatible to run on Lunarpages
+# ** servers
+#
+#
 import cgi
 import os
 import sys
