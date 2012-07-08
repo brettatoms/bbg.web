@@ -2,6 +2,7 @@
 
 import os
 import sys
+import traceback
 import urllib2
 
 import json
@@ -323,29 +324,31 @@ def get_gallery_url(url):
 print "Content-Type: text/html\n\n"
 
 # get all the tags ids
-try:
-    response = get_gallery_url(base_url + 'tags')
-except Exception, e:
-    print 'Error: '
-    print e
-    print traceback.format_exc()
-    sys.exit(1)
-
-# TODO: maybe it's best to store these in a database instead of querying the gallery everytime
-
-# find all the tags that match orchid names by querying the tag ids
-members = json.read(response.read())['members']
 tagged = {}
-for i in members:
-    response = get_gallery_url(i)
-    response = response.read()
-    entity = json.read(response)['entity']
-    if entity['name'] in orchids:
-        tagged[entity['name']] = entity
+start = 0
+while True:
+    try:
+        response = get_gallery_url(base_url + 'tags?num=100&start=%s' % start)
+        start = start+100
+    except Exception, e:
+        print 'Error: '
+        print e
+        print traceback.format_exc()
+        sys.exit(1)
 
+    # find all the tags that match orchid names by querying the tag ids
+    members = json.load(response)['members']
+    if len(members) == 0:
+        break
+    for i in members:
+        response = get_gallery_url(i)
+        entity = json.load(response)['entity']
+        if entity['name'] in orchids:
+            tagged[entity['name']] = entity
 
 # create a span for each of the orchids and include links for each
 # name with a matching tag to the orchid page
+#orchid_url = 'http://belizebotanic.org/wp/orchid?'
 tagged_keys = tagged.keys()
 for orchid in orchids:
     if orchid in tagged_keys:
