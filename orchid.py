@@ -20,7 +20,7 @@ api_key = open(os.path.join(os.getcwd(), 'gallery_api.key')).read()
 form = cgi.FieldStorage()
 # the name param should be the gallery tag id
 #tag_id = '3' # for testing
-ftag_id = form.getfirst("name", "").upper()    # get first name param
+tag_id = form.getfirst("name", "").upper()    # get first name param
 if not tag_id:
     print '<p>No name passed</p>'
     sys.exit(1)
