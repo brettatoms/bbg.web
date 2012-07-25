@@ -341,17 +341,26 @@ while True:
     if len(members) == 0:
         break
     for i in members:
-        response = get_gallery_url(i)
+        try:
+            response = get_gallery_url(i)
+        except urllib2.URLError, e:
+            print e
+            print '** ERROR: Could not open URL: %s' % i
+            response = None
+
+        if response is None:
+            continue
         entity = json.load(response)['entity']
         if entity['name'] in orchids:
             tagged[entity['name']] = entity
 
 # create a span for each of the orchids and include links for each
 # name with a matching tag to the orchid page
-#orchid_url = 'http://belizebotanic.org/wp/orchid?'
+orchid_url = 'http://belizebotanic.org/orchid?'
 tagged_keys = tagged.keys()
 for orchid in orchids:
     if orchid in tagged_keys:
-        print '<span><a href="orchid?orchid=%(name)s&orchid_id=%(id)s">%(name)s</a></span>' % tagged[orchid]
+        span = '<span><a href="' + orchid_url + '=%(name)s&orchid_id=%(id)s">%(name)s</a></span>'
+        print span % tagged[orchid]
     else:
         print '<span>%s</span>' % orchid
