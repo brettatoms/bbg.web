@@ -19,8 +19,8 @@ api_key = open(os.path.join(os.getcwd(), 'gallery_api.key')).read()
 
 form = cgi.FieldStorage()
 # the name param should be the gallery tag id
-#tag_id = '3' # for testing
 tag_id = form.getfirst("name", "").upper()    # get first name param
+#tag_id = '3' # for testing
 if not tag_id:
     print '<p>No name passed</p>'
     sys.exit(1)
@@ -50,4 +50,4 @@ for member in json.read(data)['relationships']['items']['members']:
     url = entity['file_url_public']
     thumb_url = entity['thumb_url_public']
     print '<a href="%(url)s"><img src="%(thumb_url)s"/></a>' % \
-        { 'url': url, 'thumb_url': thumb_url }
+        { 'url': url, 'thumb_url': thumb_url },
